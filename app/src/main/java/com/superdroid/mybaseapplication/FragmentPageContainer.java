@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.superdroid.mybaseapplication.manager.ThreadManager;
 import com.superdroid.mybaseapplication.utils.Constants;
 import com.superdroid.mybaseapplication.utils.UIUtil;
 
@@ -113,7 +114,47 @@ public abstract class FragmentPageContainer extends FrameLayout {
         if (currentState == Constants.PAGE_UNKNOWN) {
             currentState = Constants.PAGE_LOADING;
         }
-
+        ThreadManager.getThreadManagerInstance().longTaskExecute(new LoadDataTask());
         showPageByState();
+    }
+
+    /**
+     * 加载数据任务
+     */
+    private class LoadDataTask implements Runnable {
+        @Override
+        public void run() {
+            LoadResult result = loadData();
+            currentState = result.getValue();
+            UIUtil.runOnMainThread(new Runnable() {
+                @Override
+                public void run() {
+                    showPageByState();
+                }
+            });
+        }
+    }
+
+    /**
+     * 加载数据
+     *
+     * @return 加载数据的结果
+     */
+    protected abstract LoadResult loadData();
+
+    /**
+     * 数据加载结果
+     */
+    public enum LoadResult {
+        error(Constants.PAGE_ERROR), empty(Constants.PAGE_EMPTY), success(Constants.PAGE_SUCCESS);
+        int value;
+
+        LoadResult(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
     }
 }

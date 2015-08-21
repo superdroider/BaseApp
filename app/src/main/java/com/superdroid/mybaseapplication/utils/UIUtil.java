@@ -1,6 +1,7 @@
 package com.superdroid.mybaseapplication.utils;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.View;
 
 import com.superdroid.mybaseapplication.application.App;
@@ -17,7 +18,7 @@ public class UIUtil {
      * @param layoutId
      */
     public static View inflate(int layoutId) {
-       return View.inflate(getContext(), layoutId, null);
+        return View.inflate(getContext(), layoutId, null);
     }
 
     /**
@@ -27,5 +28,45 @@ public class UIUtil {
      */
     public static Context getContext() {
         return App.getApplication();
+    }
+
+    /**
+     * 在主线程中执行runnable
+     *
+     * @param runnable 待执行的runnable
+     */
+    public static void runOnMainThread(Runnable runnable) {
+        if (isMainThread()) {
+            runnable.run();
+        } else {
+            getMainThreadHandler().post(runnable);
+        }
+    }
+
+    /**
+     * 获取主线程中的handler
+     *
+     * @return
+     */
+    private static Handler getMainThreadHandler() {
+        return App.getHandler();
+    }
+
+    /**
+     * 判断当前线程是否是主线程
+     *
+     * @return
+     */
+    private static boolean isMainThread() {
+        return android.os.Process.myTid() == getMainThreadId();
+    }
+
+    /**
+     * 获取主线程ID
+     *
+     * @return
+     */
+    private static int getMainThreadId() {
+        return App.getMainThreadId();
     }
 }
