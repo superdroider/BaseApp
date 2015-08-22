@@ -1,16 +1,18 @@
 package com.superdroid.mybaseapplication;
 
 import android.content.Context;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.superdroid.mybaseapplication.manager.ThreadManager;
 import com.superdroid.mybaseapplication.utils.Constants;
+import com.superdroid.mybaseapplication.utils.LogUtil;
 import com.superdroid.mybaseapplication.utils.UIUtil;
 
 /**
  * Created by GT on 2015/8/20.
- * ´æ·ÅËÄÖÖÒ³ÃæµÄÈİÆ÷
+ * å­˜æ”¾å››ç§é¡µé¢çš„å®¹å™¨
  */
 public abstract class FragmentPageContainer extends FrameLayout {
 
@@ -28,7 +30,7 @@ public abstract class FragmentPageContainer extends FrameLayout {
     }
 
     /**
-     * ³õÊ¼»¯Ò³Ãæ
+     * åˆå§‹åŒ–é¡µé¢
      */
     private void initPage() {
         loadingPage = createLoadingPage();
@@ -45,16 +47,14 @@ public abstract class FragmentPageContainer extends FrameLayout {
         if (emptyPage != null) {
             this.addView(emptyPage, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         }
-
-        successPage = createSuccessPage();
-
         showPageByState();
     }
 
     /**
-     * ¸ù¾İÒ³Ãæ×´Ì¬ÏÔÊ¾ÏàÓ¦µÄÒ³Ãæ
+     * æ ¹æ®é¡µé¢çŠ¶æ€æ˜¾ç¤ºç›¸åº”çš„é¡µé¢
      */
     private void showPageByState() {
+        LogUtil.i("--showPageByState--currentstate=" + currentState);
         if (loadingPage != null) {
             loadingPage.setVisibility((currentState == Constants.PAGE_UNKNOWN || currentState == Constants.PAGE_LOADING) ? View.VISIBLE : View.GONE);
         }
@@ -66,12 +66,13 @@ public abstract class FragmentPageContainer extends FrameLayout {
         }
         if (currentState == Constants.PAGE_SUCCESS && successPage == null) {
             successPage = createSuccessPage();
-            this.addView(successPage, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+            if (successPage != null)
+                this.addView(successPage, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         }
     }
 
     /**
-     * ´´½¨¼ÓÔØÖĞÒ³Ãæ
+     * åˆ›å»ºåŠ è½½ä¸­é¡µé¢
      *
      * @return
      */
@@ -80,7 +81,7 @@ public abstract class FragmentPageContainer extends FrameLayout {
     }
 
     /**
-     * ´´½¨´íÎóÒ³Ãæ
+     * åˆ›å»ºé”™è¯¯é¡µé¢
      *
      * @return
      */
@@ -89,7 +90,7 @@ public abstract class FragmentPageContainer extends FrameLayout {
     }
 
     /**
-     * ´´½¨¿Õ°×Ò³Ãæ
+     * åˆ›å»ºç©ºç™½é¡µé¢
      *
      * @return
      */
@@ -98,14 +99,14 @@ public abstract class FragmentPageContainer extends FrameLayout {
     }
 
     /**
-     * ´´½¨³É¹¦Ò³Ãæ
+     * åˆ›å»ºæˆåŠŸé¡µé¢
      *
      * @return
      */
     protected abstract View createSuccessPage();
 
     /**
-     * Íâ²¿µ÷ÓÃ£¬ÏÔÊ¾FragmentÒ³Ãæ
+     * å¤–éƒ¨è°ƒç”¨ï¼Œæ˜¾ç¤ºFragmenté¡µé¢
      */
     public void show() {
         if (currentState == Constants.PAGE_EMPTY || currentState == Constants.PAGE_ERROR) {
@@ -119,13 +120,15 @@ public abstract class FragmentPageContainer extends FrameLayout {
     }
 
     /**
-     * ¼ÓÔØÊı¾İÈÎÎñ
+     * åŠ è½½æ•°æ®ä»»åŠ¡
      */
     private class LoadDataTask implements Runnable {
         @Override
         public void run() {
             LoadResult result = loadData();
+            LogUtil.i("LoadResult:" + result);
             currentState = result.getValue();
+            SystemClock.sleep(2000);
             UIUtil.runOnMainThread(new Runnable() {
                 @Override
                 public void run() {
@@ -136,14 +139,14 @@ public abstract class FragmentPageContainer extends FrameLayout {
     }
 
     /**
-     * ¼ÓÔØÊı¾İ
+     * åŠ è½½æ•°æ®
      *
-     * @return ¼ÓÔØÊı¾İµÄ½á¹û
+     * @return åŠ è½½æ•°æ®çš„ç»“æœ
      */
     protected abstract LoadResult loadData();
 
     /**
-     * Êı¾İ¼ÓÔØ½á¹û
+     * æ•°æ®åŠ è½½ç»“æœ
      */
     public enum LoadResult {
         error(Constants.PAGE_ERROR), empty(Constants.PAGE_EMPTY), success(Constants.PAGE_SUCCESS);

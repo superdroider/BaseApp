@@ -26,16 +26,16 @@ public class App extends Application {
     }
 
     /**
-     * 得到主线程ID
+     * 寰楀埌涓荤嚎绋婭D
      *
-     * @return 主线程ID
+     * @return 涓荤嚎绋婭D
      */
     public static int getMainThreadId() {
         return mainThreadId;
     }
 
     /**
-     * 获取主线程中的handler
+     * 鑾峰彇涓荤嚎绋嬩腑鐨刪andler
      *
      * @return
      */

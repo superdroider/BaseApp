@@ -6,23 +6,81 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.superdroid.mybaseapplication.R;
+import com.superdroid.mybaseapplication.FragmentPageContainer;
+import com.superdroid.mybaseapplication.utils.LogUtil;
+import com.superdroid.mybaseapplication.utils.ViewUtil;
 
 /**
  * A simple {@link Fragment} subclass.
- * ËùÓĞfragmentÒ³Ãæ¹²ÓĞËÄÖÖ×´Ì¬£º¼ÓÔØÖĞ¡¢¼ÓÔØ³ö´í¡¢ÄÚÈİÎª¿Õ¡¢¼ÓÔØ³É¹¦
+ * æ‰€æœ‰fragmenté¡µé¢å…±æœ‰å››ç§çŠ¶æ€ï¼šåŠ è½½ä¸­ã€åŠ è½½å‡ºé”™ã€å†…å®¹ä¸ºç©ºã€åŠ è½½æˆåŠŸ
  */
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
+
+    private FragmentPageContainer mContainer;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        LogUtil.i("---" + getClass().getSimpleName() + " onCreate---");
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        TextView textView = new TextView(getActivity());
-        textView.setText(R.string.hello_blank_fragment);
-        return textView;
+        LogUtil.i("---" + getClass().getSimpleName() + " onCreateView---");
+        LogUtil.i("mContainer:" + mContainer);
+        if (mContainer == null) {
+            initFragmentPageContainer();
+        } else {
+            ViewUtil.removeView(mContainer);
+        }
+        show();
+        LogUtil.i("mContainer:" + mContainer.getChildCount());
+
+        return mContainer;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mContainer=null;
+    }
+
+    private void initFragmentPageContainer() {
+        LogUtil.i("---initFragmentPageContainer---");
+        mContainer = new FragmentPageContainer(getActivity()) {
+            @Override
+            protected View createSuccessPage() {
+                return BaseFragment.this.createSuccessPage();
+            }
+
+            @Override
+            protected LoadResult loadData() {
+                return BaseFragment.this.loadData();
+            }
+        };
+    }
+
+    public void show() {
+        if (mContainer != null) {
+            mContainer.show();
+        }
+    }
+
+    /**
+     * åˆ›å»ºæˆåŠŸé¡µé¢
+     *
+     * @return
+     */
+    protected abstract View createSuccessPage();
+
+    /**
+     * åŠ è½½æ•°æ®
+     *
+     * @return
+     */
+    protected abstract FragmentPageContainer.LoadResult loadData();
 
 }

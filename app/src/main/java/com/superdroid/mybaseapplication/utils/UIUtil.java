@@ -8,21 +8,22 @@ import com.superdroid.mybaseapplication.application.App;
 
 /**
  * Created by GT on 2015/8/20.
- * ¸ºÔğ½çÃæUIµÄ¹¤¾ßÀà
+ * è´Ÿè´£ç•Œé¢UIçš„å·¥å…·ç±»
  */
 public class UIUtil {
 
     /**
-     * ¸ù¾İ×ÊÔ´IDÌî³äview
+     * æ ¹æ®èµ„æºIDå¡«å……view
      *
      * @param layoutId
      */
     public static View inflate(int layoutId) {
+        LogUtil.i("getContext()="+getContext()+"--layoutID="+layoutId);
         return View.inflate(getContext(), layoutId, null);
     }
 
     /**
-     * »ñÈ¡ÉÏÏÂÎÄ
+     * è·å–ä¸Šä¸‹æ–‡
      *
      * @return
      */
@@ -31,9 +32,9 @@ public class UIUtil {
     }
 
     /**
-     * ÔÚÖ÷Ïß³ÌÖĞÖ´ĞĞrunnable
+     * åœ¨ä¸»çº¿ç¨‹ä¸­æ‰§è¡Œrunnable
      *
-     * @param runnable ´ıÖ´ĞĞµÄrunnable
+     * @param runnable å¾…æ‰§è¡Œçš„runnable
      */
     public static void runOnMainThread(Runnable runnable) {
         if (isMainThread()) {
@@ -44,7 +45,7 @@ public class UIUtil {
     }
 
     /**
-     * »ñÈ¡Ö÷Ïß³ÌÖĞµÄhandler
+     * è·å–ä¸»çº¿ç¨‹ä¸­çš„handler
      *
      * @return
      */
@@ -53,7 +54,7 @@ public class UIUtil {
     }
 
     /**
-     * ÅĞ¶Ïµ±Ç°Ïß³ÌÊÇ·ñÊÇÖ÷Ïß³Ì
+     * åˆ¤æ–­å½“å‰çº¿ç¨‹æ˜¯å¦æ˜¯ä¸»çº¿ç¨‹
      *
      * @return
      */
@@ -62,7 +63,7 @@ public class UIUtil {
     }
 
     /**
-     * »ñÈ¡Ö÷Ïß³ÌID
+     * è·å–ä¸»çº¿ç¨‹ID
      *
      * @return
      */

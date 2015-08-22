@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by GT on 2015/8/20.
- * Ïß³Ì¹ÜÀíÀà
+ * çº¿ç¨‹ç®¡ç†ç±»
  */
 public class ThreadManager {
     private static ThreadManager mThreadManager;
@@ -25,7 +25,7 @@ public class ThreadManager {
     }
 
     /**
-     * Ö´ĞĞ³¤£¨ºÄÊ±£©ÈÎÎñ
+     * æ‰§è¡Œé•¿ï¼ˆè€—æ—¶ï¼‰ä»»åŠ¡
      *
      * @param runnable
      */
@@ -40,7 +40,7 @@ public class ThreadManager {
     }
 
     /**
-     * Ö´ĞĞ¶ÌÈÎÎñ
+     * æ‰§è¡ŒçŸ­ä»»åŠ¡
      *
      * @param runnable
      */
@@ -55,7 +55,7 @@ public class ThreadManager {
     }
 
     /**
-     * È¡ÏûÖ´ĞĞ³¤£¨ºÄÊ±£©ÈÎÎñ
+     * å–æ¶ˆæ‰§è¡Œé•¿ï¼ˆè€—æ—¶ï¼‰ä»»åŠ¡
      *
      * @param runnable
      */
@@ -69,7 +69,7 @@ public class ThreadManager {
     }
 
     /**
-     * È¡ÏûÖ´ĞĞ¶ÌÈÎÎñ
+     * å–æ¶ˆæ‰§è¡ŒçŸ­ä»»åŠ¡
      *
      * @param runnable
      */
@@ -84,27 +84,27 @@ public class ThreadManager {
 
 
     /**
-     * Ïß³Ì³Ø´úÀíÀà
+     * çº¿ç¨‹æ± ä»£ç†ç±»
      */
     private class ThreadPoolProxy {
-        //        corePoolSize - ³ØÖĞËù±£´æµÄÏß³ÌÊı£¬°üÀ¨¿ÕÏĞÏß³Ì¡£
-//        maximumPoolSize - ³ØÖĞÔÊĞíµÄ×î´óÏß³ÌÊı¡£
-//        keepAliveTime - µ±Ïß³ÌÊı´óÓÚºËĞÄÊ±£¬´ËÎªÖÕÖ¹Ç°¶àÓàµÄ¿ÕÏĞÏß³ÌµÈ´ıĞÂÈÎÎñµÄ×î³¤Ê±¼ä¡£
-//        unit - keepAliveTime ²ÎÊıµÄÊ±¼äµ¥Î»¡£
-//        workQueue - Ö´ĞĞÇ°ÓÃÓÚ±£³ÖÈÎÎñµÄ¶ÓÁĞ¡£´Ë¶ÓÁĞ½ö±£³ÖÓÉ execute ·½·¨Ìá½»µÄ Runnable ÈÎÎñ¡£
-//        threadFactory - Ö´ĞĞ³ÌĞò´´½¨ĞÂÏß³ÌÊ±Ê¹ÓÃµÄ¹¤³§¡£
-//        handler - ÓÉÓÚ³¬³öÏß³Ì·¶Î§ºÍ¶ÓÁĞÈİÁ¿¶øÊ¹Ö´ĞĞ±»×èÈûÊ±ËùÊ¹ÓÃµÄ´¦Àí³ÌĞò¡£
+        //        corePoolSize - æ± ä¸­æ‰€ä¿å­˜çš„çº¿ç¨‹æ•°ï¼ŒåŒ…æ‹¬ç©ºé—²çº¿ç¨‹ã€‚
+//        maximumPoolSize - æ± ä¸­å…è®¸çš„æœ€å¤§çº¿ç¨‹æ•°ã€‚
+//        keepAliveTime - å½“çº¿ç¨‹æ•°å¤§äºæ ¸å¿ƒæ—¶ï¼Œæ­¤ä¸ºç»ˆæ­¢å‰å¤šä½™çš„ç©ºé—²çº¿ç¨‹ç­‰å¾…æ–°ä»»åŠ¡çš„æœ€é•¿æ—¶é—´ã€‚
+//        unit - keepAliveTime å‚æ•°çš„æ—¶é—´å•ä½ã€‚
+//        workQueue - æ‰§è¡Œå‰ç”¨äºä¿æŒä»»åŠ¡çš„é˜Ÿåˆ—ã€‚æ­¤é˜Ÿåˆ—ä»…ä¿æŒç”± execute æ–¹æ³•æäº¤çš„ Runnable ä»»åŠ¡ã€‚
+//        threadFactory - æ‰§è¡Œç¨‹åºåˆ›å»ºæ–°çº¿ç¨‹æ—¶ä½¿ç”¨çš„å·¥å‚ã€‚
+//        handler - ç”±äºè¶…å‡ºçº¿ç¨‹èŒƒå›´å’Œé˜Ÿåˆ—å®¹é‡è€Œä½¿æ‰§è¡Œè¢«é˜»å¡æ—¶æ‰€ä½¿ç”¨çš„å¤„ç†ç¨‹åºã€‚
         private ThreadPoolExecutor mThreadPoolExecutor;
         private int corePoolSize;
         private int maximumPoolSize;
         private long keepAliveTime;
 
         /**
-         * ¹¹Ôì·½·¨
+         * æ„é€ æ–¹æ³•
          *
-         * @param corePoolSize    Ïß³Ì³ØÎ¬»¤Ïß³ÌµÄ×îÉÙÊıÁ¿
-         * @param maximumPoolSize Ïß³Ì³ØÎ¬»¤Ïß³ÌµÄ×î´óÊıÁ¿
-         * @param keepAliveTime   Ïß³Ì³ØÎ¬»¤Ïß³ÌËùÔÊĞíµÄ¿ÕÏĞÊ±¼ä
+         * @param corePoolSize    çº¿ç¨‹æ± ç»´æŠ¤çº¿ç¨‹çš„æœ€å°‘æ•°é‡
+         * @param maximumPoolSize çº¿ç¨‹æ± ç»´æŠ¤çº¿ç¨‹çš„æœ€å¤§æ•°é‡
+         * @param keepAliveTime   çº¿ç¨‹æ± ç»´æŠ¤çº¿ç¨‹æ‰€å…è®¸çš„ç©ºé—²æ—¶é—´
          */
         public ThreadPoolProxy(int corePoolSize, int maximumPoolSize,
                                long keepAliveTime) {
@@ -114,7 +114,7 @@ public class ThreadManager {
         }
 
         /**
-         * ´´½¨Ïß³Ì³Ø
+         * åˆ›å»ºçº¿ç¨‹æ± 
          *
          * @return
          */
@@ -123,7 +123,7 @@ public class ThreadManager {
                 mThreadPoolExecutor = new ThreadPoolExecutor(corePoolSize,
                         maximumPoolSize, keepAliveTime, TimeUnit.SECONDS,
                         new LinkedBlockingQueue<Runnable>(5),
-                        Executors.defaultThreadFactory());
+                        Executors.defaultThreadFactory(), new ThreadPoolExecutor.DiscardOldestPolicy());
             }
             return mThreadPoolExecutor;
         }

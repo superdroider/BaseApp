@@ -5,37 +5,42 @@ import com.superdroid.mybaseapplication.fragments.HomeFragment;
 import com.superdroid.mybaseapplication.fragments.MineFragment;
 import com.superdroid.mybaseapplication.fragments.ServiceFragment;
 import com.superdroid.mybaseapplication.utils.Constants;
+import com.superdroid.mybaseapplication.utils.LogUtil;
 
 import java.util.HashMap;
 
 /**
  * Created by GT on 2015/8/20.
- * fragment ¹¤³§Àà
+ * fragment Fragmentå·¥å‚ç±»
  */
 public class FragmentFactory {
 
     /**
-     * ´æ·ÅFragmentµÄ¼¯ºÏ
+     * å­˜æ”¾Fragmentçš„é›†åˆ
      */
     private static HashMap<Integer, BaseFragment> fragments = new HashMap<Integer, BaseFragment>();
 
     /**
-     * ¸ù¾İkeyÉú³ÉÏàÓ¦µÄFragment
+     * æ ¹æ®keyåˆ›å»ºç›¸åº”çš„Fragment
      *
-     * @param key FragmentµÄ±êÊ¶
-     * @return Éú³ÉµÄFragment
+     * @param key
+     * @return Fragment
      */
     public static BaseFragment generateFragment(int key) {
+        LogUtil.i("generateFragment:key=" + key);
         BaseFragment fragment = fragments.get(key);
         if (fragment == null) {
             switch (key) {
                 case Constants.HOME_FRAG:
+                    LogUtil.i("generateFragment HomeFragment");
                     fragment = new HomeFragment();
                     break;
                 case Constants.SERVICE_FRAG:
+                    LogUtil.i("generateFragment ServiceFragment");
                     fragment = new ServiceFragment();
                     break;
                 case Constants.MINE_FRAG:
+                    LogUtil.i("generateFragment MineFragment");
                     fragment = new MineFragment();
                     break;
             }

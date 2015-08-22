@@ -1,18 +1,28 @@
 package com.superdroid.mybaseapplication.fragments;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.superdroid.mybaseapplication.R;
+import com.superdroid.mybaseapplication.FragmentPageContainer;
+import com.superdroid.mybaseapplication.utils.LogUtil;
 
 
 public class HomeFragment extends BaseFragment {
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+    protected View createSuccessPage() {
+        LogUtil.i("---createSuccessPage---");
+        if (getActivity() == null) {
+            return null;
+        }
+        TextView tv = new TextView(getActivity());
+        tv.setText("success");
+        return tv;
+    }
+
+    @Override
+    protected FragmentPageContainer.LoadResult loadData() {
+        LogUtil.i("---loadData---");
+        return FragmentPageContainer.LoadResult.success;
     }
 
 
