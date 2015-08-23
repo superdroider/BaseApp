@@ -9,6 +9,7 @@ import com.superdroid.mybaseapplication.manager.ThreadManager;
 import com.superdroid.mybaseapplication.utils.Constants;
 import com.superdroid.mybaseapplication.utils.LogUtil;
 import com.superdroid.mybaseapplication.utils.UIUtil;
+import com.superdroid.mybaseapplication.utils.ViewUtil;
 
 /**
  * Created by GT on 2015/8/20.
@@ -77,7 +78,7 @@ public abstract class FragmentPageContainer extends FrameLayout {
      * @return
      */
     private View createLoadingPage() {
-        return UIUtil.inflate(R.layout.page_loading);
+        return ViewUtil.inflate(R.layout.page_loading);
     }
 
     /**
@@ -86,7 +87,7 @@ public abstract class FragmentPageContainer extends FrameLayout {
      * @return
      */
     private View createErrorPage() {
-        return UIUtil.inflate(R.layout.page_error);
+        return ViewUtil.inflate(R.layout.page_error);
     }
 
     /**
@@ -95,7 +96,7 @@ public abstract class FragmentPageContainer extends FrameLayout {
      * @return
      */
     private View createEmptyPage() {
-        return UIUtil.inflate(R.layout.page_empty);
+        return ViewUtil.inflate(R.layout.page_empty);
     }
 
     /**
@@ -109,14 +110,15 @@ public abstract class FragmentPageContainer extends FrameLayout {
      * 外部调用，显示Fragment页面
      */
     public void show() {
+        LogUtil.i(getClass().getSimpleName()+"调用show");
         if (currentState == Constants.PAGE_EMPTY || currentState == Constants.PAGE_ERROR) {
             currentState = Constants.PAGE_UNKNOWN;
         }
         if (currentState == Constants.PAGE_UNKNOWN) {
             currentState = Constants.PAGE_LOADING;
         }
-        ThreadManager.getThreadManagerInstance().longTaskExecute(new LoadDataTask());
         showPageByState();
+        ThreadManager.getThreadManagerInstance().longTaskExecute(new LoadDataTask());
     }
 
     /**
@@ -128,7 +130,7 @@ public abstract class FragmentPageContainer extends FrameLayout {
             LoadResult result = loadData();
             LogUtil.i("LoadResult:" + result);
             currentState = result.getValue();
-            SystemClock.sleep(2000);
+            SystemClock.sleep(1000);
             UIUtil.runOnMainThread(new Runnable() {
                 @Override
                 public void run() {

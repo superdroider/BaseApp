@@ -20,4 +20,13 @@ public class ViewUtil {
             viewGroup.removeView(view);
         }
     }
+
+    /**
+     * 根据资源ID填充view
+     *
+     * @param layoutId
+     */
+    public static View inflate(int layoutId) {
+        return View.inflate(UIUtil.getContext(), layoutId, null);
+    }
 }

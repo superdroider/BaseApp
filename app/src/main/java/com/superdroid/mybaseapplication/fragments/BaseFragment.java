@@ -3,6 +3,7 @@ package com.superdroid.mybaseapplication.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,23 +23,17 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LogUtil.i("---" + getClass().getSimpleName() + " onCreate---");
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        LogUtil.i("---" + getClass().getSimpleName() + " onCreateView---");
-        LogUtil.i("mContainer:" + mContainer);
         if (mContainer == null) {
             initFragmentPageContainer();
         } else {
             ViewUtil.removeView(mContainer);
         }
         show();
-        LogUtil.i("mContainer:" + mContainer.getChildCount());
-
         return mContainer;
     }
 
@@ -64,6 +59,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void show() {
+        LogUtil.i(getClass().getSimpleName()+"调用show");
         if (mContainer != null) {
             mContainer.show();
         }

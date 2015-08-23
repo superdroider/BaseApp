@@ -12,15 +12,6 @@ import com.superdroid.mybaseapplication.application.App;
  */
 public class UIUtil {
 
-    /**
-     * 根据资源ID填充view
-     *
-     * @param layoutId
-     */
-    public static View inflate(int layoutId) {
-        LogUtil.i("getContext()="+getContext()+"--layoutID="+layoutId);
-        return View.inflate(getContext(), layoutId, null);
-    }
 
     /**
      * 获取上下文

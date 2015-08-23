@@ -1,6 +1,7 @@
 package com.superdroid.mybaseapplication.dataprocessor;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -9,6 +10,9 @@ import com.superdroid.mybaseapplication.entities.HomeData;
 import com.superdroid.mybaseapplication.utils.Constants;
 import com.superdroid.mybaseapplication.utils.LogUtil;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 /**
@@ -16,17 +20,12 @@ import java.util.List;
  */
 public class HomeDataProcressor extends BaseDataProcessor<List<HomeData.Data>> {
 
-
     @Override
     public List<HomeData.Data> parseJson(String jsonStr) {
         if (!TextUtils.isEmpty(jsonStr)) {
-            JsonElement jsonElement = new JsonParser().parse(jsonStr);
-            LogUtil.i(jsonElement.toString());
-            if (jsonElement.isJsonObject() || jsonElement.isJsonArray()) {
-                HomeData homeData = new Gson().fromJson(jsonElement, HomeData.class);
-                if (homeData.getEc() == Constants.REQUEST_OK) {
-                    return homeData.getData();
-                }
+            HomeData homeData = new Gson().fromJson(jsonStr, HomeData.class);
+            if (homeData.getEc() == Constants.REQUEST_OK) {
+                return homeData.getData();
             }
         }
         return null;
