@@ -40,7 +40,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mContainer=null;
+        mContainer = null;
     }
 
     private void initFragmentPageContainer() {
@@ -48,6 +48,10 @@ public abstract class BaseFragment extends Fragment {
         mContainer = new FragmentPageContainer(getActivity()) {
             @Override
             protected View createSuccessPage() {
+                LogUtil.i(getClass().getSimpleName()+"非空判断-----"+getActivity());
+                if (getActivity() == null) {
+                    return null;
+                }
                 return BaseFragment.this.createSuccessPage();
             }
 
@@ -59,7 +63,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void show() {
-        LogUtil.i(getClass().getSimpleName()+"调用show");
+        LogUtil.i(getClass().getSimpleName() + "调用show");
         if (mContainer != null) {
             mContainer.show();
         }

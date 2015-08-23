@@ -22,13 +22,12 @@ public class HomeDataProcressor extends BaseDataProcessor<List<HomeData.Data>> {
 
     @Override
     public List<HomeData.Data> parseJson(String jsonStr) {
-        if (!TextUtils.isEmpty(jsonStr)) {
-            HomeData homeData = new Gson().fromJson(jsonStr, HomeData.class);
-            if (homeData.getEc() == Constants.REQUEST_OK) {
-                return homeData.getData();
-            }
+        HomeData homeData = new Gson().fromJson(jsonStr, HomeData.class);
+        if (homeData.getEc() == Constants.REQUEST_OK) {
+            return homeData.getData();
+        } else {
+            return null;
         }
-        return null;
     }
 
     @Override
