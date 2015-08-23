@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.superdroid.mybaseapplication.entities.CommentData;
 import com.superdroid.mybaseapplication.entities.MineData;
+import com.superdroid.mybaseapplication.utils.Constants;
 
 import java.util.List;
 
@@ -18,7 +19,12 @@ public class MineDataProcressor extends BaseDataProcessor<List<MineData>> {
 
     @Override
     public List<MineData> parseJson(String jsonStr) {
-//        MineData mMineData = new Gson().fromJson(jsonStr, );
-        return null;
+        CommentData data = new Gson().fromJson(jsonStr, new TypeToken<CommentData<MineData>>() {
+        }.getType());
+        if (data.getEc() == Constants.REQUEST_OK) {
+            return data.getData();
+        } else {
+            return null;
+        }
     }
 }

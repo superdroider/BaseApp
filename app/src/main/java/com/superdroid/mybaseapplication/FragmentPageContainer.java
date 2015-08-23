@@ -7,7 +7,6 @@ import android.widget.FrameLayout;
 
 import com.superdroid.mybaseapplication.manager.ThreadManager;
 import com.superdroid.mybaseapplication.utils.Constants;
-import com.superdroid.mybaseapplication.utils.LogUtil;
 import com.superdroid.mybaseapplication.utils.UIUtil;
 import com.superdroid.mybaseapplication.utils.ViewUtil;
 
@@ -55,7 +54,6 @@ public abstract class FragmentPageContainer extends FrameLayout {
      * 根据页面状态显示相应的页面
      */
     private void showPageByState() {
-        LogUtil.i("--showPageByState--currentstate=" + currentState);
         if (loadingPage != null) {
             loadingPage.setVisibility((currentState == Constants.PAGE_UNKNOWN || currentState == Constants.PAGE_LOADING) ? View.VISIBLE : View.GONE);
         }
@@ -110,7 +108,6 @@ public abstract class FragmentPageContainer extends FrameLayout {
      * 外部调用，显示Fragment页面
      */
     public void show() {
-        LogUtil.i(getClass().getSimpleName()+"调用show");
         if (currentState == Constants.PAGE_EMPTY || currentState == Constants.PAGE_ERROR) {
             currentState = Constants.PAGE_UNKNOWN;
         }
@@ -128,9 +125,8 @@ public abstract class FragmentPageContainer extends FrameLayout {
         @Override
         public void run() {
             LoadResult result = loadData();
-            LogUtil.i("LoadResult:" + result);
             currentState = result.getValue();
-            SystemClock.sleep(1000);
+            SystemClock.sleep(500);
             UIUtil.runOnMainThread(new Runnable() {
                 @Override
                 public void run() {
