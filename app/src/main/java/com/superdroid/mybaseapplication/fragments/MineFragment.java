@@ -17,7 +17,7 @@ public class MineFragment extends BaseFragment {
     @Override
     protected View createSuccessPage() {
         ListView mineList = new ListView(getActivity());
-mineList.setAdapter(new MineListAdapter());
+//mineList.setAdapter(new MineListAdapter());
         TextView tv = new TextView(getActivity());
         tv.setText("success");
         return tv;

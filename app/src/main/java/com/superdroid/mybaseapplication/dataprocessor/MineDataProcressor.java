@@ -18,7 +18,7 @@ public class MineDataProcressor extends BaseDataProcessor<List<MineData>> {
 
     @Override
     public List<MineData> parseJson(String jsonStr) {
-        MineData mMineData = new Gson().fromJson(jsonStr, );
-        return mMineData;
+//        MineData mMineData = new Gson().fromJson(jsonStr, );
+        return null;
     }
 }
