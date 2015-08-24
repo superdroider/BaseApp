@@ -3,12 +3,11 @@ package com.superdroid.mybaseapplication.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.superdroid.mybaseapplication.FragmentPageContainer;
+import com.superdroid.mybaseapplication.customuis.FragmentPageContainer;
 import com.superdroid.mybaseapplication.utils.LogUtil;
 import com.superdroid.mybaseapplication.utils.ViewUtil;
 
@@ -18,7 +17,7 @@ import com.superdroid.mybaseapplication.utils.ViewUtil;
  */
 public abstract class BaseFragment extends Fragment {
 
-    private FragmentPageContainer mContainer;
+    protected FragmentPageContainer mContainer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

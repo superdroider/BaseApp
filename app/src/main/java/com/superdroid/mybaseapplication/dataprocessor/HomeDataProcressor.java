@@ -1,17 +1,8 @@
 package com.superdroid.mybaseapplication.dataprocessor;
 
-import android.text.TextUtils;
-import android.util.Log;
-
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.superdroid.mybaseapplication.entities.HomeData;
 import com.superdroid.mybaseapplication.utils.Constants;
-import com.superdroid.mybaseapplication.utils.LogUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -28,6 +19,11 @@ public class HomeDataProcressor extends BaseDataProcessor<List<HomeData.Data>> {
         } else {
             return null;
         }
+    }
+
+    @Override
+    protected void refreshComplete(List<HomeData.Data> data) {
+
     }
 
     @Override

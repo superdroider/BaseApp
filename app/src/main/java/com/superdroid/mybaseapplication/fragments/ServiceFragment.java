@@ -2,7 +2,7 @@ package com.superdroid.mybaseapplication.fragments;
 
 import android.view.View;
 
-import com.superdroid.mybaseapplication.FragmentPageContainer;
+import com.superdroid.mybaseapplication.customuis.FragmentPageContainer;
 
 
 public class ServiceFragment extends BaseFragment {

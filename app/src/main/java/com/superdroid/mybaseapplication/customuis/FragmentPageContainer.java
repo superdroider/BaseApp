@@ -1,12 +1,14 @@
-package com.superdroid.mybaseapplication;
+package com.superdroid.mybaseapplication.customuis;
 
 import android.content.Context;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.superdroid.mybaseapplication.R;
 import com.superdroid.mybaseapplication.manager.ThreadManager;
 import com.superdroid.mybaseapplication.utils.Constants;
+import com.superdroid.mybaseapplication.utils.LogUtil;
 import com.superdroid.mybaseapplication.utils.UIUtil;
 import com.superdroid.mybaseapplication.utils.ViewUtil;
 
@@ -104,6 +106,11 @@ public abstract class FragmentPageContainer extends FrameLayout {
      */
     protected abstract View createSuccessPage();
 
+    public void setCurrentState(int currentState) {
+        this.currentState = currentState;
+        showPageByState();
+    }
+
     /**
      * 外部调用，显示Fragment页面
      */
@@ -115,6 +122,12 @@ public abstract class FragmentPageContainer extends FrameLayout {
             currentState = Constants.PAGE_LOADING;
         }
         showPageByState();
+        syncLoadData();
+    }
+
+
+    public void syncLoadData() {
+        LogUtil.i("--syncLoadData--");
         ThreadManager.getThreadManagerInstance().longTaskExecute(new LoadDataTask());
     }
 

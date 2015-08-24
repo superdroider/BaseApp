@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/8/23.
  */
-public class MineDataProcressor extends BaseDataProcessor<List<MineData>> {
+public  class MineDataProcressor extends BaseDataProcessor<List<MineData>> {
     @Override
     public String getRequestParameters() {
         return "map=api_member_interest&plum_session_api=r2bcv8d33ohcugcv725im9m857&page=0";
@@ -26,5 +26,10 @@ public class MineDataProcressor extends BaseDataProcessor<List<MineData>> {
         } else {
             return null;
         }
+    }
+
+    @Override
+    protected void refreshComplete(List<MineData> data) {
+
     }
 }

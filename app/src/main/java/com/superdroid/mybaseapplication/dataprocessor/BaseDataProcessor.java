@@ -1,18 +1,17 @@
 package com.superdroid.mybaseapplication.dataprocessor;
 
-import android.os.SystemClock;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.google.gson.JsonParseException;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.http.ResponseStream;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.superdroid.mybaseapplication.manager.ThreadManager;
 import com.superdroid.mybaseapplication.utils.Constants;
 import com.superdroid.mybaseapplication.utils.FileUtil;
 import com.superdroid.mybaseapplication.utils.IOUtil;
 import com.superdroid.mybaseapplication.utils.LogUtil;
 import com.superdroid.mybaseapplication.utils.MD5Util;
+import com.superdroid.mybaseapplication.utils.UIUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,7 +45,7 @@ public abstract class BaseDataProcessor<T> {
                 saveDataToLocal(jsonStr, getRequestParameters());
             }
         }
-        if (!TextUtils.isEmpty(jsonStr)&&isCanParse(jsonStr)) {
+        if (!TextUtils.isEmpty(jsonStr) && isCanParse(jsonStr)) {
             return parseJson(jsonStr);
         }
         return null;
@@ -57,19 +56,25 @@ public abstract class BaseDataProcessor<T> {
      */
     public T loadDataUnuseCache() {
         String jsonStr = loadDataFromNet();
-        if (!TextUtils.isEmpty(jsonStr)&&isCanParse(jsonStr)) {
+        LogUtil.i("loadDataUnuseCache : "+jsonStr);
+        if (!TextUtils.isEmpty(jsonStr) && isCanParse(jsonStr)) {
             return parseJson(jsonStr);
         } else {
             return null;
         }
     }
 
+    public void refreshData() {
+        ThreadManager.getThreadManagerInstance().longTaskExecute(new LoadDataTask());
+    }
+
     /**
      * 判断传过来的json串是否可以被解析
+     *
      * @param jsonStr
      * @return
      */
-    private boolean isCanParse(String jsonStr){
+    private boolean isCanParse(String jsonStr) {
         boolean isCanParse;
         try {
             new JSONObject(jsonStr);
@@ -77,7 +82,7 @@ public abstract class BaseDataProcessor<T> {
         } catch (JSONException e) {
             e.printStackTrace();
             LogUtil.e("json 解析异常 json：" + jsonStr);
-            isCanParse =false;
+            isCanParse = false;
         }
         return isCanParse;
     }
@@ -87,7 +92,7 @@ public abstract class BaseDataProcessor<T> {
      *
      * @return
      */
-    public String loadDataFromLocal(String key, boolean isLoadFromNetSuccess) {
+    private String loadDataFromLocal(String key, boolean isLoadFromNetSuccess) {
         String path = FileUtil.getJsonCachePath() + generateFileName(key);
         File file = new File(path);
         BufferedReader bufferedReader = null;
@@ -103,7 +108,6 @@ public abstract class BaseDataProcessor<T> {
                         while ((line = bufferedReader.readLine()) != null) {
                             strBuff.append(line);
                         }
-                        LogUtil.i(strBuff.toString());
                         return strBuff.toString();
                     }
                 }
@@ -185,8 +189,25 @@ public abstract class BaseDataProcessor<T> {
 
     /**
      * 外部回调 解析json数据
+     *
      * @param jsonStr 待解析的json串
      * @return
      */
     public abstract T parseJson(String jsonStr);
+
+    protected abstract void refreshComplete(T data);
+
+    private class LoadDataTask implements Runnable {
+
+        @Override
+        public void run() {
+            final T data = loadDataUnuseCache();
+            UIUtil.runOnMainThread(new Runnable() {
+                @Override
+                public void run() {
+                    refreshComplete(data);
+                }
+            });
+        }
+    }
 }

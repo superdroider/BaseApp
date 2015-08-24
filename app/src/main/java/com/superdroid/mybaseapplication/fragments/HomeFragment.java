@@ -1,44 +1,50 @@
 package com.superdroid.mybaseapplication.fragments;
 
-import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.superdroid.mybaseapplication.FragmentPageContainer;
+import com.superdroid.mybaseapplication.adapters.DefaultAdapter;
 import com.superdroid.mybaseapplication.adapters.HomeListAdapter;
+import com.superdroid.mybaseapplication.dataprocessor.BaseDataProcessor;
 import com.superdroid.mybaseapplication.dataprocessor.HomeDataProcressor;
 import com.superdroid.mybaseapplication.entities.HomeData;
-import com.superdroid.mybaseapplication.utils.LogUtil;
 
 import java.util.List;
 
 
-public class HomeFragment extends BaseFragment {
-
-    List<HomeData.Data> data;
+public class HomeFragment extends BaseListFragment<HomeData.Data> {
 
     @Override
-    protected View createSuccessPage() {
-        if (getActivity() == null) {
-            return null;
-        }
-        ListView homeList = new ListView(getActivity());
-        homeList.setAdapter(new HomeListAdapter(data));
-        return homeList;
+    protected void addBottomeView() {
+        TextView textView = new TextView(getActivity());
+        textView.setText("addBottomeView");
+        getBottomView().addView(textView);
     }
 
     @Override
-    protected FragmentPageContainer.LoadResult loadData() {
-        data = new HomeDataProcressor().loadData();
-        if (data == null) {
-            return FragmentPageContainer.LoadResult.error;
-        } else if (data.size() == 0) {
-            return FragmentPageContainer.LoadResult.empty;
-        } else {
-
-            return FragmentPageContainer.LoadResult.success;
-        }
+    protected void addHeaderView() {
+        TextView textView = new TextView(getActivity());
+        textView.setText("addHeaderView");
+        getHeaderView().addView(textView);
     }
 
+    @Override
+    protected DefaultAdapter<HomeData.Data> getDefaultAdapter() {
+        return new HomeListAdapter(data);
+    }
 
+    @Override
+    protected BaseDataProcessor<List<HomeData.Data>> getBaseDataProcessor() {
+        return new HomeDataProcressor() {
+            @Override
+            protected void refreshComplete(List<HomeData.Data> data) {
+                if (mPtrFrame != null && mPtrFrame.isRefreshing()) {
+                    mPtrFrame.refreshComplete();
+                    if (adapter != null && data != null) {
+                        adapter.refreshData(data);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        };
+    }
 }
