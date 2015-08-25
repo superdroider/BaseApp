@@ -36,13 +36,7 @@ public class MineFragment extends BaseFragment {
     }
 
     private void initMineDataProcressor() {
-        mMineDataProcressor = new MineDataProcressor() {
-            @Override
-            protected void refreshComplete(List<MineData> data) {
-                datas = data;
-                MineFragment.this.refreshComplete();
-            }
-        };
+        mMineDataProcressor = new MineDataProcressor() ;
     }
 
     private void setupPtrClassicFrameLayout() {

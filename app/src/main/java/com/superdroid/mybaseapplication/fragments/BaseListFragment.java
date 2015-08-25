@@ -1,7 +1,6 @@
 package com.superdroid.mybaseapplication.fragments;
 
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.superdroid.mybaseapplication.R;
@@ -22,9 +21,6 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 public abstract class BaseListFragment<T> extends BaseFragment {
     protected PtrClassicFrameLayout mPtrFrame;
     protected ListView base_lv;
-    protected FrameLayout contentView;
-    protected FrameLayout headerView;
-    protected FrameLayout bottomView;
     protected View successView;
 
     protected List<T> data;
@@ -39,14 +35,8 @@ public abstract class BaseListFragment<T> extends BaseFragment {
         adapter = getDefaultAdapter();
         base_lv.setAdapter(adapter);
         setupPtrClassicFrameLayout();
-        addHeaderView();
-        addBottomeView();
         return successView;
     }
-
-    protected abstract void addBottomeView();
-
-    protected abstract void addHeaderView();
 
     protected abstract DefaultAdapter<T> getDefaultAdapter();
 
@@ -54,7 +44,7 @@ public abstract class BaseListFragment<T> extends BaseFragment {
      * 设置下拉刷新布局参数
      */
     private void setupPtrClassicFrameLayout() {
-        mPtrFrame.setResistance(1.7f);
+        mPtrFrame.setResistance(4.7f);
         mPtrFrame.setRatioOfHeaderHeightToRefresh(1.2f);
         mPtrFrame.setDurationToClose(200);
         mPtrFrame.setDurationToCloseHeader(1000);
@@ -64,7 +54,6 @@ public abstract class BaseListFragment<T> extends BaseFragment {
         mPtrFrame.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                mBaseDataProcessor.refreshData();
             }
         });
     }
@@ -72,12 +61,9 @@ public abstract class BaseListFragment<T> extends BaseFragment {
     /**
      * 初始化view
      */
-    private void initView() {
+    protected void initView() {
         base_lv = (ListView) successView.findViewById(R.id.base_lv);
         mPtrFrame = (PtrClassicFrameLayout) successView.findViewById(R.id.base_pfl);
-        headerView = (FrameLayout) successView.findViewById(R.id.base_fl_header);
-        contentView = (FrameLayout) successView.findViewById(R.id.base_fl_content);
-        bottomView = (FrameLayout) successView.findViewById(R.id.base_fl_bottom);
     }
 
     @Override
@@ -96,18 +82,6 @@ public abstract class BaseListFragment<T> extends BaseFragment {
         } else {
             return FragmentPageContainer.LoadResult.success;
         }
-    }
-
-    public FrameLayout getContentView() {
-        return contentView;
-    }
-
-    public FrameLayout getHeaderView() {
-        return headerView;
-    }
-
-    public FrameLayout getBottomView() {
-        return bottomView;
     }
 
     protected abstract BaseDataProcessor<List<T>> getBaseDataProcessor();

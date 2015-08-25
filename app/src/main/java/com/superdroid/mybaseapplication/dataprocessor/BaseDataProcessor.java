@@ -56,16 +56,11 @@ public abstract class BaseDataProcessor<T> {
      */
     public T loadDataUnuseCache() {
         String jsonStr = loadDataFromNet();
-        LogUtil.i("loadDataUnuseCache : "+jsonStr);
         if (!TextUtils.isEmpty(jsonStr) && isCanParse(jsonStr)) {
             return parseJson(jsonStr);
         } else {
             return null;
         }
-    }
-
-    public void refreshData() {
-        ThreadManager.getThreadManagerInstance().longTaskExecute(new LoadDataTask());
     }
 
     /**
@@ -195,19 +190,4 @@ public abstract class BaseDataProcessor<T> {
      */
     public abstract T parseJson(String jsonStr);
 
-    protected abstract void refreshComplete(T data);
-
-    private class LoadDataTask implements Runnable {
-
-        @Override
-        public void run() {
-            final T data = loadDataUnuseCache();
-            UIUtil.runOnMainThread(new Runnable() {
-                @Override
-                public void run() {
-                    refreshComplete(data);
-                }
-            });
-        }
-    }
 }

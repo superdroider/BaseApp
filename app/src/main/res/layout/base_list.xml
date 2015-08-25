@@ -13,35 +13,20 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/base_comtent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <FrameLayout
-                    android:id="@+id/base_fl_header"
+                    android:id="@+id/base_header"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="200dp" />
 
-                <FrameLayout
-                    android:id="@+id/base_fl_content"
+                <com.superdroid.mybaseapplication.customuis.ListViewForScrollView
+                    android:id="@+id/base_lv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.superdroid.mybaseapplication.customuis.ListViewForScrollView
-                        android:id="@+id/base_lv"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </FrameLayout>
-
-                <FrameLayout
-                    android:id="@+id/base_fl_bottom"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-
+                    android:layout_height="match_parent" />
             </LinearLayout>
-
 
         </ScrollView>
 

@@ -11,7 +11,6 @@ import java.util.List;
  */
 public class HomeListAdapter extends DefaultAdapter<HomeData.Data> {
 
-
     public HomeListAdapter(List<HomeData.Data> data) {
         super(data);
     }

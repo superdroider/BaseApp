@@ -25,7 +25,7 @@ public abstract class BaseHolder<T> {
     }
 
     public void refreshView(T data) {
-        setData(data);
+        this.data = data;
         refreshView();
     }
 

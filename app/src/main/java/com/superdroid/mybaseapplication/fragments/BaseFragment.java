@@ -43,11 +43,9 @@ public abstract class BaseFragment extends Fragment {
     }
 
     private void initFragmentPageContainer() {
-        LogUtil.i("---initFragmentPageContainer---");
         mContainer = new FragmentPageContainer(getActivity()) {
             @Override
             protected View createSuccessPage() {
-                LogUtil.i(getClass().getSimpleName()+"非空判断-----"+getActivity());
                 if (getActivity() == null) {
                     return null;
                 }
@@ -62,7 +60,6 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void show() {
-        LogUtil.i(getClass().getSimpleName() + "调用show");
         if (mContainer != null) {
             mContainer.show();
         }

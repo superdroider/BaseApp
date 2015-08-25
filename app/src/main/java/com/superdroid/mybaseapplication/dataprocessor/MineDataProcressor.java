@@ -27,9 +27,4 @@ public  class MineDataProcressor extends BaseDataProcessor<List<MineData>> {
             return null;
         }
     }
-
-    @Override
-    protected void refreshComplete(List<MineData> data) {
-
-    }
 }

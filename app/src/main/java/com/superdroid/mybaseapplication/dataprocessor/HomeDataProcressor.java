@@ -20,12 +20,6 @@ public class HomeDataProcressor extends BaseDataProcessor<List<HomeData.Data>> {
             return null;
         }
     }
-
-    @Override
-    protected void refreshComplete(List<HomeData.Data> data) {
-
-    }
-
     @Override
     public String getRequestParameters() {
         return Constants.HOME_REQUEST_PARAMETERS;
