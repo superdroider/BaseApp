@@ -38,8 +38,8 @@ public class BannerView extends ViewPager {
     public void setData(List<Banner> data) {
         this.data = data;
         if (data != null) {
-            count = data.size();
             if (mBannerAdapter == null) {
+                count = data.size();
                 mBannerAdapter = new BannerAdapter();
                 setAdapter(mBannerAdapter);
                 setCurrentItem(Integer.MAX_VALUE / 2 + count / 2);
@@ -59,10 +59,11 @@ public class BannerView extends ViewPager {
      */
     public void refreshData(List<Banner> data) {
         if (mBannerAdapter != null && data != null) {
-            for (int i = 0; i < count + 1; i++) {
+            int forCount = count + 2 - getCurrentItem() % count;//循环次数
+            count = data.size();
+            for (int i = 0; i < forCount; i++) {
                 setCurrentItem(getCurrentItem() + 1);
             }
-            count = data.size();
         }
     }
 
@@ -155,10 +156,6 @@ public class BannerView extends ViewPager {
 
     /**
      * 焦点图适配器
-     *
-     * @author likangxin
-     * @version 2014-7-23 上午8:27:37
-     * @ModifiedBy
      */
     class BannerAdapter extends PagerAdapter {
         ImageView view;

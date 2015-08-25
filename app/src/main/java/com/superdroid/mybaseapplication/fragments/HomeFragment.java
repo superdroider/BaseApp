@@ -111,14 +111,8 @@ public class HomeFragment extends BaseFragment {
         ThreadManager.getThreadManagerInstance().longTaskExecute(new LoadBannerDataTask() {
             @Override
             protected void setBannerData(List<Banner> data) {
-//                banners = data;
-                LogUtil.i("banner 数据更新完成");
-                Banner banner = new Banner();
-                banner.setImage("http://xyapp.ikinvin.net/upload/gallery/thumbnail/735C90F2-D39A-6654-D47787212666-tbl.jpg");
-                banner.setTitle("啦啦");
-                data.clear();
-                data.add(banner);
-                holder.refreshView(data);
+                banners = data;
+                holder.refreshView(banners);
             }
         });
     }
