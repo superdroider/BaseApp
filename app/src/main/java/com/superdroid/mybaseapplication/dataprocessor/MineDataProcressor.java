@@ -14,7 +14,7 @@ import java.util.List;
 public  class MineDataProcressor extends BaseDataProcessor<List<MineData>> {
     @Override
     public String getRequestParameters() {
-        return "map=api_member_interest&plum_session_api=r2bcv8d33ohcugcv725im9m857&page=0";
+        return "map=api_member_interest&plum_session_api=ojvtm6vp08n4uej2mcu8e0vjd7&page=0";
     }
 
     @Override

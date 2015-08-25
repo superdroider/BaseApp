@@ -8,8 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.superdroid.mybaseapplication.customuis.FragmentPageContainer;
-import com.superdroid.mybaseapplication.utils.LogUtil;
 import com.superdroid.mybaseapplication.utils.ViewUtil;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,6 +63,22 @@ public abstract class BaseFragment extends Fragment {
     public void show() {
         if (mContainer != null) {
             mContainer.show();
+        }
+    }
+
+    /**
+     * 根据请求的结果判断生成请求状态码
+     *
+     * @param data 请求结果
+     * @return
+     */
+    protected <T> FragmentPageContainer.LoadResult getLoadDataResult(T data) {
+        if (data == null) {
+            return FragmentPageContainer.LoadResult.error;
+        } else if (data instanceof List && ((List) data).size() == 0) {
+            return FragmentPageContainer.LoadResult.empty;
+        } else {
+            return FragmentPageContainer.LoadResult.success;
         }
     }
 

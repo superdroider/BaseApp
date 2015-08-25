@@ -1,89 +1,93 @@
 package com.superdroid.mybaseapplication.fragments;
 
 import android.view.View;
-import android.widget.ListView;
+import android.view.ViewGroup;
 
 import com.superdroid.mybaseapplication.R;
 import com.superdroid.mybaseapplication.adapters.MineListAdapter;
 import com.superdroid.mybaseapplication.customuis.FragmentPageContainer;
+import com.superdroid.mybaseapplication.customuis.ListViewForScrollView;
+import com.superdroid.mybaseapplication.dataprocessor.BaseDataProcessor;
 import com.superdroid.mybaseapplication.dataprocessor.MineDataProcressor;
 import com.superdroid.mybaseapplication.entities.MineData;
+import com.superdroid.mybaseapplication.manager.ThreadManager;
+import com.superdroid.mybaseapplication.tasks.RefreshDataTask;
 import com.superdroid.mybaseapplication.utils.ViewUtil;
+import com.superdroid.mybaseapplication.viewholders.PflViewHolder;
 
 import java.util.List;
 
-import in.srain.cube.views.ptr.PtrClassicFrameLayout;
-import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
 public class MineFragment extends BaseFragment {
 
-    private PtrClassicFrameLayout mPtrFrame;
-    private ListView base_lv;
     private List<MineData> datas;
     private MineListAdapter adapter;
     private MineDataProcressor mMineDataProcressor;
-
+    private PflViewHolder pflViewHolder;
 
     @Override
     protected View createSuccessPage() {
-        View view = ViewUtil.inflate(R.layout.base_list);
-        initView(view);
-        adapter = new MineListAdapter(datas);
-        base_lv.setAdapter(adapter);
-        setupPtrClassicFrameLayout();
-        return view;
-    }
-
-    private void initMineDataProcressor() {
-        mMineDataProcressor = new MineDataProcressor() ;
-    }
-
-    private void setupPtrClassicFrameLayout() {
-        mPtrFrame.setResistance(1.7f);
-        mPtrFrame.setRatioOfHeaderHeightToRefresh(1.2f);
-        mPtrFrame.setDurationToClose(200);
-        mPtrFrame.setDurationToCloseHeader(1000);
-        mPtrFrame.setPullToRefresh(false);
-        mPtrFrame.setKeepHeaderWhenRefresh(true);
-        mPtrFrame.setLastUpdateTimeRelateObject(this);
-        mPtrFrame.setPtrHandler(new PtrDefaultHandler() {
+        View view = ViewUtil.inflate(R.layout.fragment_mine);
+        ListViewForScrollView lv = new ListViewForScrollView(getActivity());
+        pflViewHolder = new PflViewHolder() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                mContainer.syncLoadData();
+                executeRefreshTask();
             }
-        });
-    }
 
-    private void initView(View view) {
-        mPtrFrame = (PtrClassicFrameLayout) view.findViewById(R.id.base_pfl);
-        base_lv = (ListView) view.findViewById(R.id.base_lv);
+            @Override
+            public void onRefreshComplete(PtrFrameLayout frame) {
+                refreshComplete();
+            }
+        };
+        ((ViewGroup) view).addView(pflViewHolder.getContentView());
+        pflViewHolder.getScrollView().addView(lv);
+        adapter = new MineListAdapter(datas);
+        lv.setAdapter(adapter);
+        return view;
     }
 
     @Override
     protected FragmentPageContainer.LoadResult loadData() {
         initMineDataProcressor();
         datas = mMineDataProcressor.loadData();
-        return getLoadDataResult();
+        return getLoadDataResult(datas);
     }
 
-    private FragmentPageContainer.LoadResult getLoadDataResult() {
-        if (datas == null) {
-            return FragmentPageContainer.LoadResult.error;
-        } else if (datas.size() == 0) {
-            return FragmentPageContainer.LoadResult.empty;
-        } else {
-            return FragmentPageContainer.LoadResult.success;
-        }
+    /**
+     * 初始化数据处理器
+     */
+    private void initMineDataProcressor() {
+        mMineDataProcressor = new MineDataProcressor();
     }
 
-    private void refreshComplete() {
-        if (mPtrFrame != null && mPtrFrame.isRefreshing()) {
-            mPtrFrame.refreshComplete();
-            if (adapter != null) {
-                adapter.refreshData(datas);
-                adapter.notifyDataSetChanged();
+    /**
+     * 执行刷新任务
+     */
+    private void executeRefreshTask() {
+        ThreadManager.getThreadManagerInstance().longTaskExecute(new RefreshDataTask<List<MineData>>() {
+            @Override
+            protected void refreshComplete(List<MineData> data) {
+                MineFragment.this.datas = data;
+                pflViewHolder.onRefreshComplete();
             }
+
+            @Override
+            protected BaseDataProcessor<List<MineData>> getBaseDataProcressor() {
+                return mMineDataProcressor;
+            }
+        });
+    }
+
+
+    /**
+     * 刷新完成时调用
+     */
+    private void refreshComplete() {
+        if (adapter != null && datas != null) {
+            adapter.refreshData(datas);
+            adapter.notifyDataSetChanged();
         }
     }
 }

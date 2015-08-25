@@ -2,6 +2,8 @@ package com.superdroid.mybaseapplication.viewholders;
 
 import android.view.View;
 
+import in.srain.cube.views.ptr.PtrFrameLayout;
+
 /**
  * Created by Administrator on 2015/8/23.
  */
@@ -32,6 +34,7 @@ public abstract class BaseHolder<T> {
     public abstract View initView();
 
     public abstract void refreshView();
+
 
 
 }

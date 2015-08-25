@@ -15,7 +15,6 @@ import com.superdroid.mybaseapplication.entities.HomeData;
 import com.superdroid.mybaseapplication.manager.ThreadManager;
 import com.superdroid.mybaseapplication.tasks.LoadBannerDataTask;
 import com.superdroid.mybaseapplication.tasks.RefreshDataTask;
-import com.superdroid.mybaseapplication.utils.LogUtil;
 import com.superdroid.mybaseapplication.utils.ViewUtil;
 import com.superdroid.mybaseapplication.viewholders.BannerViewHolder;
 
@@ -54,7 +53,6 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected FragmentPageContainer.LoadResult loadData() {
-
         initHomeDataProcrsssor();
         data = new HomeDataProcressor().loadData();
         banners = new BannerDataProcessor().loadData();
@@ -82,7 +80,7 @@ public class HomeFragment extends BaseFragment {
         mPtrFrame.setResistance(1.7f);
         mPtrFrame.setRatioOfHeaderHeightToRefresh(1.2f);
         mPtrFrame.setDurationToClose(200);
-        mPtrFrame.setDurationToCloseHeader(1000);
+        mPtrFrame.setDurationToCloseHeader(500);
         mPtrFrame.setPullToRefresh(false);
         mPtrFrame.setKeepHeaderWhenRefresh(true);
         mPtrFrame.setLastUpdateTimeRelateObject(this);
@@ -94,11 +92,13 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
+    /**
+     * 执行刷新任务
+     */
     private void executeRefreshTask() {
         ThreadManager.getThreadManagerInstance().longTaskExecute(new RefreshDataTask<List<HomeData.Data>>() {
             @Override
             protected void refreshComplete(List<HomeData.Data> data) {
-                LogUtil.i("data 数据更新完成");
                 HomeFragment.this.data = data;
                 HomeFragment.this.refreshComplete();
             }
@@ -115,15 +115,5 @@ public class HomeFragment extends BaseFragment {
                 holder.refreshView(banners);
             }
         });
-    }
-
-    private FragmentPageContainer.LoadResult getLoadDataResult(List<HomeData.Data> data) {
-        if (data == null) {
-            return FragmentPageContainer.LoadResult.error;
-        } else if (data.size() == 0) {
-            return FragmentPageContainer.LoadResult.empty;
-        } else {
-            return FragmentPageContainer.LoadResult.success;
-        }
     }
 }

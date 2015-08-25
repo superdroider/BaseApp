@@ -5,13 +5,11 @@ import android.text.TextUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.http.ResponseStream;
 import com.lidroid.xutils.http.client.HttpRequest;
-import com.superdroid.mybaseapplication.manager.ThreadManager;
 import com.superdroid.mybaseapplication.utils.Constants;
 import com.superdroid.mybaseapplication.utils.FileUtil;
 import com.superdroid.mybaseapplication.utils.IOUtil;
 import com.superdroid.mybaseapplication.utils.LogUtil;
 import com.superdroid.mybaseapplication.utils.MD5Util;
-import com.superdroid.mybaseapplication.utils.UIUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -126,6 +124,7 @@ public abstract class BaseDataProcessor<T> {
         httpUtils.configHttpCacheSize(0);
         httpUtils.configDefaultHttpCacheExpiry(0);
         String resultStr = null;
+        LogUtil.d(getClass().getSimpleName() + "--url--" + Constants.BASE_URL + getRequestParameters());
         try {
             LogUtil.d(Constants.BASE_URL + getRequestParameters());
             ResponseStream responseStream = httpUtils.sendSync(HttpRequest.HttpMethod.GET,
