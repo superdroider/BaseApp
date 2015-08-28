@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name = "BottomItemView">
+        <attr name="mText" format="reference|string"/>
+        <attr name="mSelectedColor" format="reference|color"/>
+        <attr name="mUnselectedColor" format="reference|color"/>
+        <attr name="mSelectedImg" format="reference|color"/>
+        <attr name="mUnselectedImg" format="reference|color"/>
+    </declare-styleable>
+</resources>

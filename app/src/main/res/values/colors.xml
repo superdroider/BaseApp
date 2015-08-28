@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#000000</color>
+    <!-- 底部文字颜色 -->
+    <color name="blue">#17B2E6</color>
+
+    <!-- 底部layout背景颜色 -->
+    <color name="main_bottom_bg">#F7F7F7</color>
+    <color name="main_bottom_gray">#eee</color>
+    <!-- 整体背景颜色 -->
+    <color name="main_bg">#F3F3F3</color>
+    <color name="gray">#ff999999</color>
 </resources>

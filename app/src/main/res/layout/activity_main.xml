@@ -1,43 +1,74 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+              xmlns:mbottom="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".MainActivity">
+
+    <include
+        layout="@layout/communal_topbar"/>
 
     <FrameLayout
         android:id="@+id/home_container"
-        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-       ></FrameLayout>
+        android:layout_weight="1"
+        ></FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:orientation="horizontal">
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/main_bottom_shape"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="4dp"
+        android:paddingTop="6dp">
 
-        <Button
-            android:id="@+id/home_btn"
+        <com.superdroid.base.customuis.BottomItemView
+            android:id="@+id/home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/home" />
+            mbottom:mSelectedColor="@color/blue"
+            mbottom:mSelectedImg="@drawable/icon_home_blue"
+            mbottom:mText="首页"
+            mbottom:mUnselectedColor="@color/gray"
+            mbottom:mUnselectedImg="@drawable/icon_home_gray"/>
 
-        <Button
-            android:id="@+id/service_btn"
+        <com.superdroid.base.customuis.BottomItemView
+            android:id="@+id/around"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/service" />
+            mbottom:mSelectedColor="@color/blue"
+            mbottom:mSelectedImg="@drawable/icon_around_blue"
+            mbottom:mText="周边"
+            mbottom:mUnselectedColor="@color/gray"
+            mbottom:mUnselectedImg="@drawable/icon_around_gray"/>
 
-        <Button
-            android:id="@+id/mine_btn"
+        <com.superdroid.base.customuis.BottomItemView
+            android:id="@+id/mine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/mine" />
+            mbottom:mSelectedColor="@color/blue"
+            mbottom:mSelectedImg="@drawable/icon_mine_blue"
+            mbottom:mText="我的"
+            mbottom:mUnselectedColor="@color/gray"
+            mbottom:mUnselectedImg="@drawable/icon_mine_gray"/>
+
+        <com.superdroid.base.customuis.BottomItemView
+            android:id="@+id/more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            mbottom:mSelectedColor="@color/blue"
+            mbottom:mSelectedImg="@drawable/icon_more_blue"
+            mbottom:mText="更多"
+            mbottom:mUnselectedColor="@color/gray"
+            mbottom:mUnselectedImg="@drawable/icon_more_gray"/>
     </LinearLayout>
 
 

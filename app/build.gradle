@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.0"
 
     defaultConfig {
-        applicationId "com.superdroid.mybaseapplication"
+        applicationId "com.superdroid.com.superdroid.base"
         minSdkVersion 10
         targetSdkVersion 22
         versionCode 1
@@ -27,4 +27,5 @@ dependencies {
     compile 'com.android.support:support-v4:22.2.1'
     compile files('libs/gson-2.3.1.jar')
     compile project(':ptr-lib')
+    compile project(':eventbus-lib')
 }
