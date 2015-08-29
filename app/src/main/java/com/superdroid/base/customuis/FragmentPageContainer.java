@@ -8,7 +8,6 @@ import android.widget.FrameLayout;
 import com.superdroid.base.R;
 import com.superdroid.base.manager.ThreadManager;
 import com.superdroid.base.utils.Constants;
-import com.superdroid.base.utils.LogUtil;
 import com.superdroid.base.utils.UIUtil;
 import com.superdroid.base.utils.ViewUtil;
 
@@ -87,7 +86,14 @@ public abstract class FragmentPageContainer extends FrameLayout {
      * @return
      */
     private View createErrorPage() {
-        return ViewUtil.inflate(R.layout.page_error);
+        View view = ViewUtil.inflate(R.layout.page_error);
+        view.findViewById(R.id.btn_reload).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                show();
+            }
+        });
+        return view;
     }
 
     /**
@@ -106,11 +112,6 @@ public abstract class FragmentPageContainer extends FrameLayout {
      */
     protected abstract View createSuccessPage();
 
-    public void setCurrentState(int currentState) {
-        this.currentState = currentState;
-        showPageByState();
-    }
-
     /**
      * 外部调用，显示Fragment页面
      */
@@ -125,9 +126,7 @@ public abstract class FragmentPageContainer extends FrameLayout {
         syncLoadData();
     }
 
-
-    public void syncLoadData() {
-        LogUtil.i("--syncLoadData--");
+    private void syncLoadData() {
         ThreadManager.getThreadManagerInstance().longTaskExecute(new LoadDataTask());
     }
 
@@ -137,9 +136,14 @@ public abstract class FragmentPageContainer extends FrameLayout {
     private class LoadDataTask implements Runnable {
         @Override
         public void run() {
+            long start = System.currentTimeMillis();
             LoadResult result = loadData();
             currentState = result.getValue();
-            SystemClock.sleep(500);
+            long end = System.currentTimeMillis();
+            long still = end - start;
+            if (still < 500) {
+                SystemClock.sleep(500 - still);
+            }
             UIUtil.runOnMainThread(new Runnable() {
                 @Override
                 public void run() {

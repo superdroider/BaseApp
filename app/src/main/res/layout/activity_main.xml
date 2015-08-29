@@ -1,10 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:mbottom="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
+              xmlns:badge="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context=".MainActivity">
+              >
 
     <include
         layout="@layout/communal_topbar"/>
@@ -15,61 +14,43 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         ></FrameLayout>
-
-    <LinearLayout
+    <RadioGroup
+        android:id="@+id/main_rg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:background="@drawable/main_bottom_shape"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="4dp"
-        android:paddingTop="6dp">
+        android:orientation="horizontal">
 
-        <com.superdroid.base.customuis.BottomItemView
+        <com.superdroid.base.customuis.BadgeRadioButton
             android:id="@+id/home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            mbottom:mSelectedColor="@color/blue"
-            mbottom:mSelectedImg="@drawable/icon_home_blue"
-            mbottom:mText="首页"
-            mbottom:mUnselectedColor="@color/gray"
-            mbottom:mUnselectedImg="@drawable/icon_home_gray"/>
+            style="@style/BottomRadioBUttonMainTab"
+            android:drawableTop="@drawable/selector_main_tab_home"
+            android:checked="true"
+            android:text="首页"
+            badge:badge_horizontalMargin="25dp"/>
 
-        <com.superdroid.base.customuis.BottomItemView
+        <com.superdroid.base.customuis.BadgeRadioButton
             android:id="@+id/around"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            mbottom:mSelectedColor="@color/blue"
-            mbottom:mSelectedImg="@drawable/icon_around_blue"
-            mbottom:mText="周边"
-            mbottom:mUnselectedColor="@color/gray"
-            mbottom:mUnselectedImg="@drawable/icon_around_gray"/>
+            style="@style/BottomRadioBUttonMainTab"
+            android:drawableTop="@drawable/selector_main_tab_around"
+            android:text="周边"
+            />
 
-        <com.superdroid.base.customuis.BottomItemView
+        <com.superdroid.base.customuis.BadgeRadioButton
             android:id="@+id/mine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            mbottom:mSelectedColor="@color/blue"
-            mbottom:mSelectedImg="@drawable/icon_mine_blue"
-            mbottom:mText="我的"
-            mbottom:mUnselectedColor="@color/gray"
-            mbottom:mUnselectedImg="@drawable/icon_mine_gray"/>
+            style="@style/BottomRadioBUttonMainTab"
+            android:drawableTop="@drawable/selector_main_tab_mine"
+            badge:badge_horizontalMargin="25dp"
+            android:text="我的"
+            />
 
-        <com.superdroid.base.customuis.BottomItemView
+        <com.superdroid.base.customuis.BadgeRadioButton
             android:id="@+id/more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            mbottom:mSelectedColor="@color/blue"
-            mbottom:mSelectedImg="@drawable/icon_more_blue"
-            mbottom:mText="更多"
-            mbottom:mUnselectedColor="@color/gray"
-            mbottom:mUnselectedImg="@drawable/icon_more_gray"/>
-    </LinearLayout>
-
-
+            style="@style/BottomRadioBUttonMainTab"
+            badge:badge_horizontalMargin="25dp"
+            android:drawableTop="@drawable/selector_main_tab_more"
+            android:text="更多"
+            />
+    </RadioGroup>
 </LinearLayout>

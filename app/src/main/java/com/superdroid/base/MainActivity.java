@@ -5,18 +5,22 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
-import com.superdroid.base.customuis.BottomItemView;
+import com.superdroid.base.customuis.BadgeRadioButton;
 import com.superdroid.base.factorys.FragmentFactory;
 import com.superdroid.base.utils.Constants;
 
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener {
+public class MainActivity extends ActionBarActivity implements RadioGroup.OnCheckedChangeListener {
 
-    private BottomItemView home;
-    private BottomItemView around;
-    private BottomItemView mine;
-    private BottomItemView more;
+    private BadgeRadioButton home;
+    private BadgeRadioButton around;
+    private BadgeRadioButton mine;
+    private BadgeRadioButton more;
+    private RadioGroup rg_main;
+    private TextView topbar_title_tv;
     private FragmentManager fragmentManager;
 
     @Override
@@ -25,7 +29,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initView();
         registeListener();
-        home.setSelected(true);
+        topbar_title_tv.setText(R.string.home);
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.home_container, FragmentFactory.generateFragment(Constants.HOME_FRAG));
@@ -33,42 +37,48 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     private void initView() {
-        home = (BottomItemView) findViewById(R.id.home);
-        around = (BottomItemView) findViewById(R.id.around);
-        mine = (BottomItemView) findViewById(R.id.mine);
-        more = (BottomItemView) findViewById(R.id.more);
+        topbar_title_tv = getViewById(R.id.topbar_title_tv);
+        rg_main = getViewById(R.id.main_rg);
+        home = getViewById(R.id.home);
+        around = getViewById(R.id.around);
+        mine = getViewById(R.id.mine);
+        more = getViewById(R.id.more);
+
+        topbar_title_tv.setVisibility(View.VISIBLE);
+        home.showCirclePointBadge();
+        around.showCirclePointBadge();
+        mine.showCirclePointBadge();
+        more.showCirclePointBadge();
     }
 
     private void registeListener() {
-        home.setOnClickListener(this);
-        around.setOnClickListener(this);
-        mine.setOnClickListener(this);
-        more.setOnClickListener(this);
+        rg_main.setOnCheckedChangeListener(this);
     }
 
     @Override
-    public void onClick(View v) {
-
-        resetSelectStatu();
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        switch (v.getId()) {
+        switch (checkedId) {
             case R.id.home:
-                home.setSelected(!home.isSelected());
+                topbar_title_tv.setText(R.string.home);
+                around.hiddenBadge();
                 transaction.replace(R.id.home_container,
                         FragmentFactory.generateFragment(Constants.HOME_FRAG));
                 break;
             case R.id.around:
-                around.setSelected(!mine.isSelected());
+                topbar_title_tv.setText(R.string.service);
+                home.hiddenBadge();
+                around.showCirclePointBadge();
                 transaction.replace(R.id.home_container,
                         FragmentFactory.generateFragment(Constants.SERVICE_FRAG));
                 break;
             case R.id.mine:
-                mine.setSelected(!mine.isSelected());
+                topbar_title_tv.setText(R.string.mine);
                 transaction.replace(R.id.home_container,
                         FragmentFactory.generateFragment(Constants.MINE_FRAG));
                 break;
             case R.id.more:
-                more.setSelected(!more.isSelected());
+                topbar_title_tv.setText(R.string.mine);
                 transaction.replace(R.id.home_container,
                         FragmentFactory.generateFragment(Constants.MINE_FRAG));
                 break;
@@ -76,10 +86,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         transaction.commit();
     }
 
-    private void resetSelectStatu() {
-        home.setSelected(false);
-        around.setSelected(false);
-        mine.setSelected(false);
-        more.setSelected(false);
+    /**
+     * 根据ID查找view
+     *
+     * @param id  view的ID
+     * @param <T> view的类型
+     * @return
+     */
+    protected <T extends View> T getViewById(int id) {
+        return (T) findViewById(id);
     }
 }

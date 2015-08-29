@@ -81,7 +81,9 @@ public class ServiceFragment extends BaseFragment implements AdapterView.OnItemC
         int status = mRefreshAndLoadMoreEvent.getStatus();
         if (type == Constants.PALM_REFRESH) {
             if (status == Constants.PALM_REFRESH_BEGIN) {
-                refreshBegin();
+                if (!isRefreshing) {
+                    refreshBegin();
+                }
             } else if (status == Constants.PALM_REFRESH_COMPLETE) {
                 refreshComplete();
             } else if (status == Constants.PALM_LOAD_OK) {
@@ -93,7 +95,9 @@ public class ServiceFragment extends BaseFragment implements AdapterView.OnItemC
             }
         } else if (type == Constants.PALM_LOADMORE) {
             if (status == Constants.PALM_LOADMORE_BEGIN) {
-                loadMoreDataBegin();
+                if (!isLoading && hasMoreData) {
+                    loadMoreDataBegin();
+                }
             } else if (status == Constants.PALM_LOAD_OK) {
                 loadMoreDataComplete(mRefreshAndLoadMoreEvent.getData());
             }
@@ -101,12 +105,10 @@ public class ServiceFragment extends BaseFragment implements AdapterView.OnItemC
     }
 
     private void refreshBegin() {
-        if (!isRefreshing) {
-            isRefreshing = true;
-            page = 0;
-            mServiceDataProcressor.setRequestParameters("map=api_shop&flag=1&mc_id=24&page=0");
-            new RefreshAndLoadMoreTask(mServiceDataProcressor, Constants.PALM_REFRESH).execute();
-        }
+        isRefreshing = true;
+        page = 0;
+        mServiceDataProcressor.setRequestParameters("map=api_shop&flag=1&mc_id=24&page=0");
+        new RefreshAndLoadMoreTask(mServiceDataProcressor, Constants.PALM_REFRESH).execute();
     }
 
     private void initServiceDataProcressor() {
@@ -117,10 +119,7 @@ public class ServiceFragment extends BaseFragment implements AdapterView.OnItemC
      * 刷新完成时调用
      */
     private void refreshComplete() {
-        if (adapter != null) {
-            adapter.refreshData(data);
-            adapter.notifyDataSetChanged();
-        }
+        refreshAdapterData();
         hasMoreData = true;
         isRefreshing = false;
     }
@@ -129,49 +128,59 @@ public class ServiceFragment extends BaseFragment implements AdapterView.OnItemC
      * 开始加载更多数据
      */
     private void loadMoreDataBegin() {
-        if (!isLoading) {
-            if (hasMoreData) {
-                if (canScrollToBottom)
-                    UIUtil.executeDelayedTask(new Runnable() {
-                        @Override
-                        public void run() {
-                            mPflViewHolder.getScrollView().fullScroll(ScrollView.FOCUS_DOWN);
-                        }
-                    }, 10);
-                mServiceDataProcressor.setRequestParameters("map=api_shop&flag=1&mc_id=24&page=" + page);
-                mLoadMoreHolder.getContentView().setVisibility(View.VISIBLE);
-                new RefreshAndLoadMoreTask(mServiceDataProcressor, Constants.PALM_LOADMORE).execute();
-                isLoading = true;
-                canScrollToBottom = true;
-            } else {
-                UIUtil.showToast("无更多数据");
-            }
-        }
+        scrollDown();
+        mServiceDataProcressor.setRequestParameters("map=api_shop&flag=1&mc_id=24&page=" + page);
+        mLoadMoreHolder.getContentView().setVisibility(View.VISIBLE);
+        new RefreshAndLoadMoreTask(mServiceDataProcressor, Constants.PALM_LOADMORE).execute();
+        isLoading = true;
+        canScrollToBottom = true;
+    }
+
+    /**
+     * scrollView 滑动到底部
+     */
+    private void scrollDown() {
+        if (canScrollToBottom)
+            UIUtil.executeDelayedTask(new Runnable() {
+                @Override
+                public void run() {
+                    mPflViewHolder.getScrollView().fullScroll(ScrollView.FOCUS_DOWN);
+                }
+            }, 10);
     }
 
     /**
      * 更多数据加载完成
      */
     private void loadMoreDataComplete(List<ServiceData> data) {
+        int dataStatus = -1;
         if (data == null) {
-            mLoadMoreHolder.setData(Constants.ERROR_STATUS);
+            dataStatus = Constants.ERROR_STATUS;
         } else if (data.size() < 10) {
             hasMoreData = false;
-            mLoadMoreHolder.setData(Constants.NO_DATA_STATUS);
+            dataStatus = Constants.NO_DATA_STATUS;
             this.data.addAll(data);
-            adapter.refreshData(this.data);
-            adapter.notifyDataSetChanged();
+            refreshAdapterData();
         } else {
             hasMoreData = true;
             page++;
-            mLoadMoreHolder.setData(Constants.HAVE_MOREDATA_STATUS);
-            mLoadMoreHolder.getContentView().setVisibility(View.GONE);
+            dataStatus = Constants.HAVE_MOREDATA_STATUS;
             this.data.addAll(data);
-            adapter.refreshData(this.data);
-            adapter.notifyDataSetChanged();
+            refreshAdapterData();
         }
+        mLoadMoreHolder.setData(dataStatus);
         mLoadMoreHolder.refreshView();
         isLoading = false;
+    }
+
+    /**
+     * 刷新适配器中的数据
+     */
+    private void refreshAdapterData() {
+        if (adapter != null) {
+            adapter.refreshData(data);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

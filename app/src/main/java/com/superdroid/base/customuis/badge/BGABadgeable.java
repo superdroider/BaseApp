@@ -1,3 +1,4 @@
+package com.superdroid.base.customuis.badge;
 /**
  * Copyright 2015 bingoogolapple
  * <p/>
@@ -13,8 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.superdroid.bga_lib;
 
 import android.graphics.Bitmap;
 import android.view.MotionEvent;

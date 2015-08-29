@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.superdroid.bga_lib;
+package com.superdroid.base.customuis.badge;
 
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com

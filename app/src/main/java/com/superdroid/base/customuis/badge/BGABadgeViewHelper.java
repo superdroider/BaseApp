@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.superdroid.bga_lib;
+package com.superdroid.base.customuis.badge;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -29,6 +29,8 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
+
+import com.superdroid.base.R;
 
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com

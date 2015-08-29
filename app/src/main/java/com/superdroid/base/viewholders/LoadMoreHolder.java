@@ -15,6 +15,7 @@ import de.greenrobot.event.EventBus;
 public class LoadMoreHolder extends BaseHolder<Integer> {
     private RelativeLayout rl_loading;
     private RelativeLayout rl_load_error;
+    private RelativeLayout rl_no_data;
 
     private View view;
     private Integer status;
@@ -24,6 +25,7 @@ public class LoadMoreHolder extends BaseHolder<Integer> {
         view = ViewUtil.inflate(R.layout.item_more);
         rl_loading = (RelativeLayout) view.findViewById(R.id.rl_loading);
         rl_load_error = (RelativeLayout) view.findViewById(R.id.rl_load_error);
+        rl_no_data = (RelativeLayout) view.findViewById(R.id.rl_no_data);
         rl_load_error.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -40,13 +42,16 @@ public class LoadMoreHolder extends BaseHolder<Integer> {
         this.status = data;
         if (data == Constants.ERROR_STATUS) {
             rl_loading.setVisibility(View.GONE);
+            rl_no_data.setVisibility(View.GONE);
             rl_load_error.setVisibility(View.VISIBLE);
         } else if (data == Constants.HAVE_MOREDATA_STATUS) {
             rl_loading.setVisibility(View.VISIBLE);
             rl_load_error.setVisibility(View.GONE);
+            rl_no_data.setVisibility(View.GONE);
         } else if (data == Constants.NO_DATA_STATUS) {
             rl_loading.setVisibility(View.GONE);
             rl_load_error.setVisibility(View.GONE);
+//            rl_no_data.setVisibility(View.VISIBLE);
         }
     }
 }

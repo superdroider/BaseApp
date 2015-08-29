@@ -9,6 +9,6 @@
         android:id="@+id/iv_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_empty_page" />
+        android:src="@mipmap/ic_empty_page" />
 
 </LinearLayout>

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.superdroid.bga_lib;
+package com.superdroid.base.customuis.badge;
 
 import android.content.Context;
 import android.content.res.Resources;

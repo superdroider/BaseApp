@@ -3,6 +3,10 @@
   <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/superdroid/base/application/App.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/superdroid/base/customuis/FragmentPageContainer.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superdroid/base/customuis/badge/BGABadgeViewHelper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superdroid/base/customuis/badge/BGABadgeable.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superdroid/base/customuis/badge/BGADragBadgeView.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superdroid/base/customuis/badge/BGADragDismissDelegate.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/superdroid/base/fragments/BaseFragment.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/superdroid/base/manager/ThreadManager.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/superdroid/base/utils/Constants.java" charset="UTF-8" />

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="#18B4ED"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="#18B4ED"
     >
 
     <Button
@@ -22,6 +23,7 @@
         android:text="返回"
         android:textColor="@drawable/xml_back_textcolor"
         android:textSize="18sp"
+        android:visibility="gone"
         />
 
     <TextView
@@ -32,9 +34,9 @@
         android:ellipsize="end"
         android:maxLength="16"
         android:singleLine="true"
-        android:text="biaori"
         android:textColor="#ffffff"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/topbar_right_btn"
@@ -49,5 +51,6 @@
         android:paddingTop="5dp"
         android:textColor="@drawable/xml_back_textcolor"
         android:textSize="18sp"
+        android:visibility="gone"
         />
 </RelativeLayout>
